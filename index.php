@@ -1,10 +1,3 @@
-login.php \
-register.php \
-browse.php \
-history.php \
-watchlist.php \
-update_account.php \
-logout.php \
-stream.php \
-home.php \
-movie_info.php \
+<?php
+	echo "hello";
+?>
