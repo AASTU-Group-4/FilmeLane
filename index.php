@@ -1,3 +1,4 @@
 <?php
-	echo "hello";
+	Session_start();
+	
 ?>
