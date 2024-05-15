@@ -57,7 +57,7 @@
 <body>
     <div class="container">
         <h2>Login</h2>
-        <form method="POST" action="login.php">
+        <form method="POST" action="/pages/login.php">
             <label for="identifier">Email or Username:</label>
             <input type="text" name="identifier" id="identifier" required><br>
             <?php if (!empty($errors["identifier"])): ?>

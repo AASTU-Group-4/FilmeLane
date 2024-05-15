@@ -1,6 +1,6 @@
 <?php
-require_once 'module/User.php';
-require 'views/login_view.php';
+require_once '../models/User.php';
+require '../views/login_view.php';
 
 $errors = array();
 
@@ -20,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $isEmail = filter_var($identifier, FILTER_VALIDATE_EMAIL);
 
         if ($isEmail) {
-            $user = new User();
-            $isLoggedIn = $user->loginUserWithEmail($identifier, $password);
+            $user = new UserModel();
+            $isLoggedIn = $user->loginUser($identifier, $password);
 
             if ($isLoggedIn) {
                 session_start();
@@ -32,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errors["login"] = "Invalid email or password.";
             }
         } else {
-            $user = new User();
-            $isLoggedIn = $user->loginUserWithUsername($identifier, $password);
+            $user = new UserModel();
+            $isLoggedIn = $user->loginUser($identifier, $password);
 
             if ($isLoggedIn) {
                 session_start();
