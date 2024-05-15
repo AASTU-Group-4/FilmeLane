@@ -26,7 +26,7 @@ function addToHistory($userId, $movieId, $dateWatched) {
 
 
 // display full watch history of a user
-function getHistory($userId) {
+function getHistory($userId) { 
     // Connect to the database
     $conn = get_connection();
     // Prepare the SQL statement with parameter placeholders
