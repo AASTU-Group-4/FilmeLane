@@ -1,6 +1,6 @@
 <?php
 function get_connection() {
-    $servername = "192.168.1.7";
+    $servername = "127.0.0.1";
     $username = "root";
     $password = "admin";
     $dbname = "movies_db";

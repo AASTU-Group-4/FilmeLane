@@ -1,10 +1,15 @@
 -- Active: 1713009772730@@127.0.0.1@3307@FilmLane
 -- Create Users Table
+USE movies_db;
+
 CREATE TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    password VARCHAR(255) NOT NULL, -- Hashed password
+    password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    profile_pic VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

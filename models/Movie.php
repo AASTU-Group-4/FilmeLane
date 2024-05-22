@@ -1,5 +1,5 @@
 <?php 
-require_once 'includes/api.php';
+require_once '../includes/api.php';
 
 class Movie {
     private $conn;

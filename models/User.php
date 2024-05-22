@@ -1,81 +1,112 @@
 <?php
-require_once('../includes/db_connection.php');
+require_once ('../includes/db_connection.php');
 
-class UserModel {
+class UserModel
+{
     private $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->conn = get_connection();
     }
-
-    public function createUser($username, $email, $password) {
+    public function createUser($username, $email, $password, $fullName, $gender, $profilePic)
+    {
         if ($this->checkEmailExists($email)) {
-            return false; 
+            return false;
         }
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $createdDate = date('Y-m-d');
 
-        $stmt = $this->conn->prepare("INSERT INTO Users (username, email, password, created_at) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $username, $email, $hashedPassword, $createdDate);
-        
+        $stmt = $this->conn->prepare("INSERT INTO Users (username, email, password, full_name, gender, profile_pic, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssss", $username, $email, $hashedPassword, $fullName, $gender, $profilePic, $createdDate);
+
         if ($stmt->execute()) {
-            return $stmt->insert_id; 
+            return $stmt->insert_id;
         } else {
-            return false; 
+            return false;
         }
     }
 
-    public function changeUsername($userID, $newUsername) {
+    public function UpdateUser($userID, $username, $email, $password, $fullName, $gender, $profilePic)
+    {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $updateDate = date('Y-m-d');
+    
+        $stmt = $this->conn->prepare("UPDATE Users SET username=?, email=?, password=?, full_name=?, gender=?, profile_pic=?, updated_at=? WHERE user_id=?");
+        $stmt->bind_param("sssssssi", $username, $email, $hashedPassword, $fullName, $gender, $profilePic, $updateDate, $userID);
+    
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    
+
+
+    public function changeUsername($userID, $newUsername)
+    {
         $stmt = $this->conn->prepare("UPDATE Users SET username = ? WHERE user_id = ?");
         $stmt->bind_param("si", $newUsername, $userID);
-        return $stmt->execute(); 
+        return $stmt->execute();
     }
 
-    public function loginUser($usernameOrEmail, $password) {
-        $stmt = $this->conn->prepare("SELECT * FROM Users WHERE username = ? OR email = ?");
-        $stmt->bind_param("ss", $usernameOrEmail, $usernameOrEmail);
+    public function changeFullName($userID, $newFullName)
+    {
+        $stmt = $this->conn->prepare("UPDATE Users SET full_name = ? WHERE user_id = ?");
+        $stmt->bind_param("si", $newFullName, $userID);
+        return $stmt->execute();
+    }
+
+    public function loginUser($email, $password) {
+        $stmt = $this->conn->prepare("SELECT * FROM Users WHERE email = ?");
+        $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
-
-        if ($result->num_rows == 1) {
-            $user = $result->fetch_assoc();
-            if (password_verify($password, $user['password'])) {
-                return $user; 
-            }
+        $user = $result->fetch_assoc();
+    
+        if ($user && password_verify($password, $user['password'])) {
+            return $user;
+        } else {
+            return false;
         }
-
-        return null; 
     }
+    
 
-    public function getUserInfo($userID) {
+    public function getUserInfo($userID)
+    {
         $stmt = $this->conn->prepare("SELECT * FROM Users WHERE user_id = ?");
         $stmt->bind_param("i", $userID);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows == 1) {
-            return $result->fetch_assoc(); 
+            return $result->fetch_assoc();
         }
 
-        return null; 
+        return null;
     }
 
-    public function deleteUser($userID) {
+    public function deleteUser($userID)
+    {
         $stmt = $this->conn->prepare("DELETE FROM Users WHERE user_id = ?");
         $stmt->bind_param("i", $userID);
-        return $stmt->execute(); 
+        return $stmt->execute();
     }
 
-    public function changePassword($userID, $newPassword) {
+    public function changePassword($userID, $newPassword)
+    {
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
         $stmt = $this->conn->prepare("UPDATE Users SET password = ? WHERE user_id = ?");
         $stmt->bind_param("si", $hashedPassword, $userID);
-        return $stmt->execute(); 
+        return $stmt->execute();
     }
 
-    public function checkEmailExists($email) {
+    public function checkEmailExists($email)
+    {
         $stmt = $this->conn->prepare("SELECT * FROM Users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -83,5 +114,12 @@ class UserModel {
 
         return $result->num_rows > 0;
     }
+
+
+    public function changeProfilePic($userID, $newProfilePic)
+    {
+        $stmt = $this->conn->prepare("UPDATE Users SET profile_pic = ? WHERE user_id = ?");
+        $stmt->bind_param("si", $newProfilePic, $userID);
+        return $stmt->execute();
+    }
 }
-?>

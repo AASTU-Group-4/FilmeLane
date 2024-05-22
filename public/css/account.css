@@ -1,0 +1,143 @@
+* {
+  color: #0d0e11;
+}
+
+body {
+  margin-top: 20px;
+  background-color: #44728e;
+  color: #69707a;
+}
+.img-account-profile {
+  height: 10rem;
+}
+.rounded-circle {
+  border-radius: 50% !important;
+}
+.card {
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(150, 162, 179, 0.374);
+}
+.card .card-header {
+  font-weight: 500;
+}
+.card-header:first-child {
+  border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+  padding: 1rem 1.35rem;
+  margin-bottom: 0;
+  background-color: rgba(33, 40, 50, 0.03);
+  border-bottom: 1px solid rgb(198, 222, 255);
+}
+.form-control,
+.dataTable-input {
+  display: block;
+  width: 100%;
+  padding: 0.875rem 1.125rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1;
+  color: #69707a;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #00000054;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.35rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.nav-borders .nav-link.active {
+  color: #002154;
+  border-bottom-color: #4e90f4;
+}
+.nav-borders .nav-link {
+  color: #ffffff;
+  border-bottom-width: 0.125rem;
+  border-bottom-style: solid;
+  border-bottom-color: transparent;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+
+input[type="file"] {
+  outline: none;
+  padding: 4px;
+  margin: -4px;
+}
+
+input[type="file"]:focus-within::file-selector-button,
+input[type="file"]:focus::file-selector-button {
+  outline: 2px solid #0964b0;
+  outline-offset: 2px;
+}
+
+input[type="file"]::before {
+  top: 16px;
+}
+
+input[type="file"]::after {
+  top: 14px;
+}
+
+/* ------- From Step 2 ------- */
+
+input[type="file"] {
+  position: relative;
+}
+
+input[type="file"]::file-selector-button {
+  width: 136px;
+  color: transparent;
+}
+
+/* Faked label styles and icon */
+input[type="file"]::before {
+  position: absolute;
+  pointer-events: none;
+  /*   top: 11px; */
+  left: 40px;
+  color: #0964b0;
+  content: "Upload File";
+}
+
+input[type="file"]::after {
+  position: absolute;
+  pointer-events: none;
+  /*   top: 10px; */
+  left: 16px;
+  height: 20px;
+  width: 20px;
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230964B0'%3E%3Cpath d='M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z'/%3E%3C/svg%3E");
+}
+
+/* ------- From Step 1 ------- */
+
+/* file upload button */
+input[type="file"]::file-selector-button {
+  border-radius: 4px;
+  padding: 0 16px;
+  height: 40px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+  margin-right: 16px;
+  transition: background-color 200ms;
+}
+
+/* file upload button hover state */
+input[type="file"]::file-selector-button:hover {
+  background-color: #f3f4f6;
+}
+
+/* file upload button active state */
+input[type="file"]::file-selector-button:active {
+  background-color: #e5e7eb;
+}
