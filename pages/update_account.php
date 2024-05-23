@@ -127,6 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $userM->UpdateUser($user['user_id'], $username, $email, $Newpassword, $fullName, $gender, $photo);
         if ($result) {
             $errors['update'] = 'update successfull';
+            $user = $userM->getUserInfo($_SESSION['user_id']);
 
         } else {
             $errors['update'] = 'Failed to upadte';
@@ -138,8 +139,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 }
-
-$user = $userM->getUserInfo($_SESSION['user_id']);
 
 
 require_once '../views/update_account_view.php';

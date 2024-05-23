@@ -63,7 +63,7 @@
    * spacing
    */
 
-  --section-padding: 50px;
+  --section-padding: 70px;
 }
 
 /*-----------------------------------*\
@@ -113,6 +113,7 @@ html {
   font-family: var(--ff-poppins);
   scroll-behavior: smooth;
 }
+
 
 body {
   background: var(--eerie-black);
@@ -392,7 +393,6 @@ body.active {
 
 .has-scrollbar::-webkit-scrollbar-track {
   background: transparent;
-  box-shadow: 0 0 0 2px var(--citrine);
   border-radius: 10px;
 }
 

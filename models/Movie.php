@@ -14,7 +14,23 @@ class Movie
     {
         $url = API_URL . '3/search/multi?query=' . urlencode($query) . '&include_adult=false&language=en-US&page=' . $page;
 
-        return $this->sendRequest($url);
+        $list = $this->sendRequest($url);
+        $allList = [];
+        foreach ($list['results'] as $ls) {
+            if ($ls['media_type'] == 'movie') {
+                $allList['movie'][] = $ls;
+            } elseif ($ls['media_type'] == 'tv') {
+                $allList['tv'][] = $ls;
+            }
+        }
+        usort($allList['movie'], function($a, $b) {
+            return $b['vote_average'] - $a['vote_average'];
+        });
+
+        usort($allList['tv'], function($a, $b) {
+            return $b['vote_average'] - $a['vote_average'];
+        });
+        return $allList;
     }
 
     private function sendRequest($url)
