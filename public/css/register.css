@@ -11,7 +11,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background: linear-gradient(155deg, #313538, #4688c1);
+  background: hsl(207, 19%, 11%);
 }
 
 .error-message {
