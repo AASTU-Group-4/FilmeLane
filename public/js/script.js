@@ -50,3 +50,21 @@ window.addEventListener("scroll", function () {
   window.scrollY >= 500 ? goTopBtn.classList.add("active") : goTopBtn.classList.remove("active");
 
 });
+
+/**
+ * script.js
+*/
+
+$(document).ready(function() {
+  $('.clear-btn').on('click', function() {
+      $.ajax({
+          type: 'POST',
+          url: '../models/userHistory.php',
+          data: { clearHistory: true },
+          success: function() {
+              // clear the list view from the page
+              $('.clear-list').empty();
+          }
+      });
+  });
+});
