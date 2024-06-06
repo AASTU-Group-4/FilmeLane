@@ -27,19 +27,26 @@ function addToHistory($userId, $movieId, $dateWatched) {
 
 // display full watch history of a user
 function getHistory($userId) { 
+
+    try{
     // Connect to the database
     $conn = get_connection();
     // Prepare the SQL statement with parameter placeholders
-    $sql = "SELECT * FROM UserHistory WHERE user_id = ?";
+    $sql = "SELECT * FROM UserHistory WHERE user_id = ? ORDER BY date_watched DESC";
 
     // Prepare the statement
     $stmt = mysqli_prepare($conn, $sql);
+    if (!$stmt) {
+        throw new Exception("Failed to prepare statement: " . mysqli_error($conn));
+    }
     
     // Bind the user_id parameter to the prepared statement
     mysqli_stmt_bind_param($stmt, "s", $userId);
     
     // Execute the prepared statement
-    mysqli_stmt_execute($stmt);
+    if (!mysqli_stmt_execute($stmt)) {
+            throw new Exception("Failed to execute statement: " . mysqli_stmt_error($stmt));
+        }
     
     // Get the result set
     $result = mysqli_stmt_get_result($stmt);
@@ -53,6 +60,19 @@ function getHistory($userId) {
 
     // Return the history data
     return $history;
+    }
+    catch (Exception $e) {
+        // Handle the error
+        echo "Error: " . $e->getMessage();
+        return array(); // or some default value
+    }
+}
+
+if (isset($_POST['clearHistory'])) {
+    $userId = $_SESSION['user_id'];
+    clearHistory($userId);
+    header('Location: history_view.php'); // redirect back to history view page
+    exit;
 }
 
 // delete all watch history for a user
