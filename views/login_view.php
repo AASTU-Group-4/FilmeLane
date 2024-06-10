@@ -19,7 +19,7 @@
     <form method="POST" action=<?php echo $_SERVER["PHP_SELF"] ?> >
         <h3>Login </h3>
 
-        <label for="identifier">Username</label>
+        <label for="identifier">Email</label>
         <input type="email" name="identifier" id="identifier" placeholder="Email" required>
         <?php if (!empty($errors["identifier"])): ?>
             <p class="error-message"><?php echo $errors["identifier"]; ?></p>

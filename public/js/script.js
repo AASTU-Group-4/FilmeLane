@@ -22,6 +22,7 @@ for (let i = 0; i < navElemArr.length; i++) {
   });
 
 }
+<<<<<<< HEAD
 
 
 
@@ -68,3 +69,5 @@ $(document).ready(function() {
       });
   });
 });
+=======
+>>>>>>> 8049074 (refactor: Update section padding in style.css, fix broken link in header.php, and improve Movie model)

@@ -46,7 +46,7 @@ $moviesG = $movie->getMovieGenres()['genres'];
                                         <div class="col-md-6">
                                             <?php foreach ($moviesG as $genre): ?>
                                                 <li><a class="dropdown-item display-4"
-                                                        href="/pages/genre.php?id=<?php echo $genre['id']; ?>"><?php echo $genre['name']; ?></a>
+                                                        href="/pages/genre.php?id=<?php echo $genre['name']; ?>"><?php echo $genre['name']; ?></a>
                                                 </li>
                                             <?php endforeach; ?>
                                         </div>
