@@ -22,7 +22,6 @@ for (let i = 0; i < navElemArr.length; i++) {
   });
 
 }
-<<<<<<< HEAD
 
 
 
@@ -52,22 +51,18 @@ window.addEventListener("scroll", function () {
 
 });
 
-/**
- * script.js
-*/
 
-$(document).ready(function() {
-  $('.clear-btn').on('click', function() {
-      $.ajax({
-          type: 'POST',
-          url: '../models/userHistory.php',
-          data: { clearHistory: true },
-          success: function() {
-              // clear the list view from the page
-              $('.clear-list').empty();
-          }
-      });
-  });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const searchButton = document.querySelector('.search-btn');
+    const searchInput = document.getElementById('search-input');
+
+    searchButton.addEventListener('click', function() {
+        if (searchInput.value.trim() === '') {
+            searchInput.focus();
+        } else {
+            searchInput.closest('form').submit();
+        }
+    });
 });
-=======
->>>>>>> 8049074 (refactor: Update section padding in style.css, fix broken link in header.php, and improve Movie model)
+

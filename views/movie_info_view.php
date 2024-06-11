@@ -7,128 +7,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free Guy 2021</title>
 
+
 </head>
 
 <body id="#top">
 
-  <header class="header" data-header>
-    <div class="container">
-
-      <div class="overlay" data-overlay></div>
-
-      <a href="./index.html" class="logo">
-        <img src="./assets/images/logo.svg" alt="Filmlane logo">
-      </a>
-
-      <div class="header-actions">
-
-        <button class="search-btn">
-          <ion-icon name="search-outline"></ion-icon>
-        </button>
-
-        <div class="lang-wrapper">
-          <label for="language">
-            <ion-icon name="globe-outline"></ion-icon>
-          </label>
-
-          <select name="language" id="language">
-            <option value="en">EN</option>
-            <option value="au">AU</option>
-            <option value="ar">AR</option>
-            <option value="tu">TU</option>
-          </select>
-        </div>
-
-        <button class="btn btn-primary">Sign in</button>
-
-      </div>
-
-      <button class="menu-open-btn" data-menu-open-btn>
-        <ion-icon name="reorder-two"></ion-icon>
-      </button>
-
-      <nav class="navbar" data-navbar>
-
-        <div class="navbar-top">
-
-          <a href="./index.html" class="logo">
-            <img src="./assets/images/logo.svg" alt="Filmlane logo">
-          </a>
-
-          <button class="menu-close-btn" data-menu-close-btn>
-            <ion-icon name="close-outline"></ion-icon>
-          </button>
-
-        </div>
-
-        <ul class="navbar-list">
-
-          <li>
-            <a href="./index.html" class="navbar-link">Home</a>
-          </li>
-
-          <li>
-            <a href="#" class="navbar-link">Movie</a>
-          </li>
-
-          <li>
-            <a href="#" class="navbar-link">Tv Show</a>
-          </li>
-
-          <li>
-            <a href="#" class="navbar-link">Web Series</a>
-          </li>
-
-          <li>
-            <a href="#" class="navbar-link">Pricing</a>
-          </li>
-
-        </ul>
-
-        <ul class="navbar-social-list">
-
-          <li>
-            <a href="#" class="navbar-social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="navbar-social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="navbar-social-link">
-              <ion-icon name="logo-pinterest"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="navbar-social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="navbar-social-link">
-              <ion-icon name="logo-youtube"></ion-icon>
-            </a>
-          </li>
-
-        </ul>
-
-      </nav>
-
-    </div>
-  </header>
-
-
+  <style>
+    .movie-detail {
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        /* Gradient overlay */
+        url('<?php echo "https://image.tmdb.org/t/p/original/" . $movie["poster_path"]; ?>') no-repeat;
+      background-size: cover;
+      background-position: center;
+      padding-top: 160px;
+      padding-bottom: var(--section-padding);
+      background-attachment: fixed;
+      color: #ffffff;
+      /* Text color */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      /* Text shadow for better visibility */
+    }
+  </style>
 
 
 
   <main>
+    <?php if($watch): ?>
+      <div class="movie-container">
+        <iframe src="<?php echo $url;?>" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+      </div>
+    <?php endif?>
     <article>
 
       <!-- 
@@ -140,7 +49,8 @@
 
           <figure class="movie-detail-banner">
 
-            <img src="./assets/images/movie-4.png" alt="Free guy movie poster">
+            <img src='<?php echo "https://image.tmdb.org/t/p/original/" . $movie["poster_path"]; ?>'
+              alt="Free guy movie poster">
 
             <button class="play-btn">
               <ion-icon name="play-circle-outline"></ion-icon>
@@ -150,28 +60,22 @@
 
           <div class="movie-detail-content">
 
-            <p class="detail-subtitle">New Episodes</p>
-
-            <h1 class="h1 detail-title">
-              Free <strong>Guy</strong>
-            </h1>
+            <h2 class="h2 detail-title">
+              <strong><?php echo $movie["title"]; ?></strong>
+            </h2>
 
             <div class="meta-wrapper">
 
               <div class="badge-wrapper">
-                <div class="badge badge-fill">PG 13</div>
+                <div class="badge badge-fill"><a href="<?php echo $trailer_url;?>" target="__blank">Trailer</a></div>
 
                 <div class="badge badge-outline">HD</div>
               </div>
 
               <div class="ganre-wrapper">
-                <a href="#">Comedy,</a>
-
-                <a href="#">Action,</a>
-
-                <a href="#">Adventure,</a>
-
-                <a href="#">Science Fiction</a>
+                <?php foreach ($movie["genres"] as $genre): ?>
+                  <a href="/pages/genre.php?id=<?php echo $genre['name']; ?>"><?php echo $genre['name']; ?></a>
+                <?php endforeach; ?>
               </div>
 
               <div class="date-time">
@@ -179,13 +83,13 @@
                 <div>
                   <ion-icon name="calendar-outline"></ion-icon>
 
-                  <time datetime="2021">2021</time>
+                  <time datetime="2021"><?php echo substr($movie['release_date'], 0, 4); ?></time>
                 </div>
 
                 <div>
                   <ion-icon name="time-outline"></ion-icon>
 
-                  <time datetime="PT115M">115 min</time>
+                  <time datetime="PT115M"><?php echo $movie['runtime']; ?> min</time>
                 </div>
 
               </div>
@@ -193,17 +97,19 @@
             </div>
 
             <p class="storyline">
-              A bank teller called Guy realizes he is a background character in an open world video game called Free
-              City that will
-              soon go offline.
+              <?php echo $movie['overview']; ?>
             </p>
+            <button class="btn btn-primary" style="margin-bottom: 20px">
+              <ion-icon name="play"></ion-icon>
+              <a href="./movie_info.php?id=<?php echo $movie['id']; ?>&watch=true">
+                <span>Watch now</span> </a>
+            </button>
 
             <div class="details-actions">
 
               <button class="share">
                 <ion-icon name="share-social"></ion-icon>
-
-                <span>Share</span>
+                <a href="<?php echo $movie['homepage']; ?>"><span>Share</span></a>
               </button>
 
               <div class="title-wrapper">
@@ -213,18 +119,12 @@
               </div>
 
               <button class="btn btn-primary">
-                <ion-icon name="play"></ion-icon>
+                <ion-icon name="add"></ion-icon>
 
-                <span>Watch Now</span>
+                <span>Add to favorite</span>
               </button>
 
             </div>
-
-            <a href="./assets/images/movie-4.png" download class="download-btn">
-              <span>Download</span>
-
-              <ion-icon name="download-outline"></ion-icon>
-            </a>
 
           </div>
 
@@ -234,163 +134,42 @@
 
 
 
-
-      <!-- 
-        - #TV SERIES
-      -->
-
-      <section class="tv-series">
+      <section class="upcoming">
         <div class="container">
 
-          <p class="section-subtitle">Best TV Series</p>
+          <div class="flex-wrapper">
 
-          <h2 class="h2 section-title">World Best TV Series</h2>
+            <div class="title-wrapper">
+              <p class="section-subtitle">Online Streaming</p>
 
-          <ul class="movies-list">
+              <h2 class="h2 section-title">Recommendation</h2>
+            </div>
 
-            <li>
-              <div class="movie-card">
+            <ul class="filter-list">
 
-                <a href="./movie-details.html">
-                  <figure class="card-banner">
-                    <img src="./assets/images/series-1.png" alt="Moon Knight movie poster">
-                  </figure>
-                </a>
+              <li>
+                <button class="filter-btn">Movies</button>
+              </li>
 
-                <div class="title-wrapper">
-                  <a href="./movie-details.html">
-                    <h3 class="card-title">Moon Knight</h3>
-                  </a>
+              <li>
+                <button class="filter-btn">TV Shows</button>
+              </li>
 
-                  <time datetime="2022">2022</time>
-                </div>
+              <li>
+                <button class="filter-btn">Anime</button>
+              </li>
 
-                <div class="card-meta">
-                  <div class="badge badge-outline">2K</div>
+            </ul>
 
-                  <div class="duration">
-                    <ion-icon name="time-outline"></ion-icon>
+          </div>
 
-                    <time datetime="PT47M">47 min</time>
-                  </div>
+          <ul class="movies-list  has-scrollbar">
 
-                  <div class="rating">
-                    <ion-icon name="star"></ion-icon>
-
-                    <data>8.6</data>
-                  </div>
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="movie-card">
-
-                <a href="./movie-details.html">
-                  <figure class="card-banner">
-                    <img src="./assets/images/series-2.png" alt="Halo movie poster">
-                  </figure>
-                </a>
-
-                <div class="title-wrapper">
-                  <a href="./movie-details.html">
-                    <h3 class="card-title">Halo</h3>
-                  </a>
-
-                  <time datetime="2022">2022</time>
-                </div>
-
-                <div class="card-meta">
-                  <div class="badge badge-outline">2K</div>
-
-                  <div class="duration">
-                    <ion-icon name="time-outline"></ion-icon>
-
-                    <time datetime="PT59M">59 min</time>
-                  </div>
-
-                  <div class="rating">
-                    <ion-icon name="star"></ion-icon>
-
-                    <data>8.8</data>
-                  </div>
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="movie-card">
-
-                <a href="./movie-details.html">
-                  <figure class="card-banner">
-                    <img src="./assets/images/series-3.png" alt="Vikings: Valhalla movie poster">
-                  </figure>
-                </a>
-
-                <div class="title-wrapper">
-                  <a href="./movie-details.html">
-                    <h3 class="card-title">Vikings: Valhalla</h3>
-                  </a>
-
-                  <time datetime="2022">2022</time>
-                </div>
-
-                <div class="card-meta">
-                  <div class="badge badge-outline">2K</div>
-
-                  <div class="duration">
-                    <ion-icon name="time-outline"></ion-icon>
-
-                    <time datetime="PT51M">51 min</time>
-                  </div>
-
-                  <div class="rating">
-                    <ion-icon name="star"></ion-icon>
-
-                    <data>8.3</data>
-                  </div>
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="movie-card">
-
-                <a href="./movie-details.html">
-                  <figure class="card-banner">
-                    <img src="./assets/images/series-4.png" alt="Money Heist movie poster">
-                  </figure>
-                </a>
-
-                <div class="title-wrapper">
-                  <a href="./movie-details.html">
-                    <h3 class="card-title">Money Heist</h3>
-                  </a>
-
-                  <time datetime="2017">2017</time>
-                </div>
-
-                <div class="card-meta">
-                  <div class="badge badge-outline">4K</div>
-
-                  <div class="duration">
-                    <ion-icon name="time-outline"></ion-icon>
-
-                    <time datetime="PT70M">70 min</time>
-                  </div>
-
-                  <div class="rating">
-                    <ion-icon name="star"></ion-icon>
-
-                    <data>8.3</data>
-                  </div>
-                </div>
-
-              </div>
-            </li>
+            <?php
+            foreach ($movieRecommendations as $movie) {
+              echo "<li>" . createDynamicMovieCard($movie) . "</li>";
+            }
+            ?>
 
           </ul>
 
@@ -415,8 +194,8 @@
 
         <div class="footer-brand-wrapper">
 
-          <a href="./index.html" class="logo">
-            <img src="./assets/images/logo.svg" alt="Filmlane logo">
+          <a href="" class="logo">
+            <img src="/public/images/logo.svg" alt="Filmlane logo">
           </a>
 
           <ul class="footer-list">
@@ -445,81 +224,6 @@
 
         </div>
 
-        <div class="divider"></div>
-
-        <div class="quicklink-wrapper">
-
-          <ul class="quicklink-list">
-
-            <li>
-              <a href="#" class="quicklink-link">Faq</a>
-            </li>
-
-            <li>
-              <a href="#" class="quicklink-link">Help center</a>
-            </li>
-
-            <li>
-              <a href="#" class="quicklink-link">Terms of use</a>
-            </li>
-
-            <li>
-              <a href="#" class="quicklink-link">Privacy</a>
-            </li>
-
-          </ul>
-
-          <ul class="social-list">
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-facebook"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-twitter"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-pinterest"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-linkedin"></ion-icon>
-              </a>
-            </li>
-
-          </ul>
-
-        </div>
-
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="container">
-
-        <p class="copyright">
-          &copy; 2022 <a href="#">codewithsadee</a>. All Rights Reserved
-        </p>
-
-      </div>
-    </div>
-
-  </footer>
-
-
-
-
-  <a href="#top" class="go-top" data-go-top>
-    <ion-icon name="chevron-up"></ion-icon>
-  </a>
 
 
 </body>

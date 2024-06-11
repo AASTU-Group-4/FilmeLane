@@ -100,6 +100,7 @@
                 <?php if (!empty($errors["register"])): ?>
                     <p class="error-message"><?php echo $errors["register"]; ?></p>
                 <?php endif; ?>
+                <a href="home.php">Home</a>
             </form>
         </div>
     </div>

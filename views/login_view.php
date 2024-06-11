@@ -37,6 +37,7 @@
         <?php endif; ?>
         <a href="register.php">Sign Up</a>
         <input type="submit" value="Login" class="butn">
+        <a href="home.php">Home</a>
 
 
     </form>

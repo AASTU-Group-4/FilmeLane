@@ -23,13 +23,18 @@ class Movie
                 $allList['tv'][] = $ls;
             }
         }
-        usort($allList['movie'], function($a, $b) {
-            return $b['vote_average'] - $a['vote_average'];
-        });
+        if (!empty($allList['movie'])) {
+            usort($allList['movie'], function($a, $b) {
+                return $b['vote_average'] - $a['vote_average'];
+            });
+        }
 
-        usort($allList['tv'], function($a, $b) {
-            return $b['vote_average'] - $a['vote_average'];
-        });
+        if (!empty($allList['tv'])) {
+            usort($allList['tv'], function($a, $b) {
+                return $b['vote_average'] - $a['vote_average'];
+            });
+        }
+
         return $allList;
     }
 
@@ -229,6 +234,11 @@ class Movie
     {
         $url = API_URL . '3/tv/top_rated?language=en-US&page=' . $page;
 
+        return $this->sendRequest($url);
+    }
+
+    public function getSeasonDetail($series_id, $season_number) {
+        $url = API_URL . "3/tv/{$series_id}/season/{$season_number}";
         return $this->sendRequest($url);
     }
 

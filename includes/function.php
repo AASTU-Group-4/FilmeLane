@@ -6,16 +6,17 @@ function createDynamicMovieCard($movie)
     $releaseYear = substr($movie['release_date'], 0, 4);
     $runtime = $movie['runtime'];
     $rating = $movie['vote_average'];
+    $id = $movie['id'];
 
     $card = <<<HTML
 <div class="movie-card">
-    <a href="./movie-details.html">
+    <a href="./movie_info.php?id={$id}">
         <figure class="card-banner">
             <img src="$posterUrl" alt="$title movie poster">
         </figure>
     </a>
     <div class="title-wrapper">
-        <a href="./movie-details.html">
+        <a href="./movie_info.php?id={$id}">
             <h3 class="card-title">$title</h3>
         </a>
         <time datetime="$releaseYear">$releaseYear</time>
@@ -41,7 +42,12 @@ function createDynamicTvshowCard($tvShow)
 {
     $posterUrl = "https://image.tmdb.org/t/p/original/" . $tvShow["poster_path"];
     $title = $tvShow['name'];
-    $releaseYear = substr($tvShow['last_air_date'], 0, 4);
+    $id = $tvShow['id'];
+    if (isset($tvShow['first_air_date'])) {
+        $releaseYear = substr($tvShow['first_air_date'], 0, 4);
+    } else {
+        $releaseYear = "N/A";
+    }
     if (!empty($tvShow['episode_run_time'])) {
         $runtime = $tvShow['episode_run_time'][0];
     } else {
@@ -52,13 +58,13 @@ function createDynamicTvshowCard($tvShow)
 
     $card = <<<HTML
 <div class="movie-card">
-    <a href="./movie-details.html">
+    <a href="./series_info.php?id={$id}">
         <figure class="card-banner">
             <img src="$posterUrl" alt="$title movie poster">
         </figure>
     </a>
     <div class="title-wrapper">
-        <a href="./movie-details.html">
+        <a href="./series_info.php?id={$id}">
             <h3 class="card-title">$title</h3>
         </a>
         <time datetime="$releaseYear">$releaseYear</time>

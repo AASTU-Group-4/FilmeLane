@@ -1,6 +1,6 @@
 <?php
 require_once '../models/Movie.php';
-session_regenerate_id();
+
 $isLoggedIn = true;
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['islogin']) || $_SESSION['islogin'] !== true) {
     $isLoggedIn = false;
@@ -20,85 +20,95 @@ $moviesG = $movie->getMovieGenres()['genres'];
     <title>Filmlane - Best movie collections</title>
 
     <link rel="shortcut icon" href="../public/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script defer src="../public/js/script.js"></script>
+
+    <link rel="stylesheet" href="/public/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
 </head>
 
 <body>
-    <header>
-        <div class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
+    <header class="header" data-header>
+        <div class="container">
+            <div class="overlay" data-overlay></div>
 
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="/pages/home.php">
-                                <img src="../public/images/logo.svg" width="120" height="25" alt="logo">
-                            </a>
-                        </div>
+            <a href="/pages/home.php" class="logo">
+                <img src="../public/images/logo.svg" alt="Filmlane logo" />
+            </a>
 
-                        <div class="navbar-collapse collapse" id="mobile_menu">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a href="/pages/home.php">Home</a></li>
-                                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Genre<span
-                                            class="caret"></span></a>
-                                    <ul class="dropdown-menu row">
-                                        <div class="col-md-6">
-                                            <?php foreach ($moviesG as $genre): ?>
-                                                <li><a class="dropdown-item display-4"
-                                                        href="/pages/genre.php?id=<?php echo $genre['name']; ?>"><?php echo $genre['name']; ?></a>
-                                                </li>
-                                            <?php endforeach; ?>
-                                        </div>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Movies</a></li>
-                                <li><a href="#">Tv Show</a></li>
-                                <li><a href="#">Top IMDB</a></li>
-                            </ul>
+            <nav class="navbar" data-navbar>
+                <div class="navbar-top">
+                    <a href="/pages/home.php" class="logo">
+                        <img src="../public/images/logo.svg" alt="Filmlane logo" />
+                    </a>
 
-                            <ul class="nav navbar-nav navbar-right">
-                                <ul class="nav navbar-nav">
-                                    <li>
-                                        <form action="/pages/search.php" class="navbar-form" method="GET">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <input type="search" name="search" id=""
-                                                        placeholder="Search Anything Here..." class="form-control">
-                                                    <span class="input-group-addon" id="search-icon">
-                                                        <span class="glyphicon glyphicon-search"></span></span>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </li>
-                                </ul>
-                                <?php if ($isLoggedIn): ?>
-                                    <li><a href="/pages/update_account.php"><span class="glyphicon glyphicon-user"></span>
-                                            Profile</a></li>
-                                <?php endif; ?>
-
-                                <?php if (!$isLoggedIn): ?>
-                                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
-                                                class="glyphicon glyphicon-log-in"></span> Login / Sign Up <span
-                                                class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="/pages/login.php">Login</a></li>
-                                            <li><a href="/pages/register.php">Sign Up</a></li>
-                                        </ul>
-                                    </li>
-                                <?php endif; ?>
-                            </ul>
-                        </div>
-                    </div>
+                    <button class="menu-close-btn" data-menu-close-btn>
+                        <ion-icon name="close-outline"></ion-icon>
+                    </button>
                 </div>
-            </div>
-        </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script>
-            document.getElementById('search-icon').addEventListener('click', function () {
-                this.closest('form').submit();
-            });
-        </script>
 
+                <ul class="navbar-list">
+                    <li>
+                        <a href="/pages/home.php" class="navbar-link">Home</a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <div class="dropdown">
+                                <button class="dropbtn navbar-link">Genre</button>
+                                <div class="dropdown-content">
+                                    <?php foreach ($moviesG as $genre): ?>
+                                        <a href="/pages/genre.php?id=<?php echo $genre['name']; ?>"><?php echo $genre['name']; ?></a>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="navbar-link">Movies</a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="navbar-link">Tv Show</a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="navbar-link">Top IMDB</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <form action="/pages/search.php" method="GET">
+                    <div class="input-container">
+                        <input type="text" name="search" placeholder="Search..." required />
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <?php if ($isLoggedIn): ?>
+                <li><a href="/pages/update_account.php" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span>
+                        Profile</a></li>
+            <?php else: ?>
+                <li><a href="/pages/login.php" class="btn btn-primary"><span class="glyphicon glyphicon-log-in"></span>
+                        Login</a></li>
+            <?php endif; ?>
+            <button class="menu-open-btn" data-menu-open-btn>
+                <ion-icon name="reorder-two"></ion-icon>
+            </button>
+
+        </div>
+
+
+        </div>
     </header>
+    

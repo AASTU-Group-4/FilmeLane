@@ -7,15 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filmlane - Best movie collections</title>
 
-    <link rel="stylesheet" href="/public/css/style.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         .hero {
-            background: url('<?php echo "https://image.tmdb.org/t/p/original/" . $pMoviesDetails["poster_path"]; ?>') no-repeat;
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('<?php echo "https://image.tmdb.org/t/p/original/" . $pMoviesDetails["poster_path"]; ?>') no-repeat;
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -30,7 +26,7 @@
     </style>
 </head>
 
-<body id="top">
+<body id="#top">
 
 
     <main>
@@ -79,8 +75,8 @@
 
                         <button class="btn btn-primary">
                             <ion-icon name="play"></ion-icon>
-
-                            <span>Watch now</span>
+                            <a href="./movie_info.php?id=<?php echo $pMoviesDetails['id']; ?>">
+                                <span>Watch now</span> </a>
                         </button>
 
                     </div>
@@ -199,7 +195,7 @@
 
                 <div class="footer-brand-wrapper">
 
-                    <a href="./index.html" class="logo">
+                    <a href="" class="logo">
                         <img src="/public/images/logo.svg" alt="Filmlane logo">
                     </a>
 
