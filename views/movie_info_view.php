@@ -74,7 +74,7 @@
 
               <div class="ganre-wrapper">
                 <?php foreach ($movie["genres"] as $genre): ?>
-                  <a href="/pages/genre.php?id=<?php echo $genre['name']; ?>"><?php echo $genre['name']; ?></a>
+                  <a href="/pages/genre.php?id=<?php echo $genre['id']; ?>"><?php echo $genre['name']; ?></a>
                 <?php endforeach; ?>
               </div>
 

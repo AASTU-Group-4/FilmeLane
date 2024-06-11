@@ -84,7 +84,7 @@
                             <div class="ganre-wrapper">
                                 <?php foreach ($tvShow["genres"] as $genre): ?>
                                     <a
-                                        href="/pages/genre.php?id=<?php echo $genre['name']; ?>"><?php echo $genre['name']; ?></a>
+                                        href="/pages/genre.php?id=<?php echo $genre['id']; ?>"><?php echo $genre['name']; ?></a>
                                 <?php endforeach; ?>
                             </div>
 

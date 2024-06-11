@@ -65,7 +65,7 @@ $moviesG = $movie->getMovieGenres()['genres'];
                                 <button class="dropbtn navbar-link">Genre</button>
                                 <div class="dropdown-content">
                                     <?php foreach ($moviesG as $genre): ?>
-                                        <a href="/pages/genre.php?id=<?php echo $genre['name']; ?>"><?php echo $genre['name']; ?></a>
+                                        <a href="/pages/genre.php?id=<?php echo $genre['id']; ?>"><?php echo $genre['name']; ?></a>
                                     <?php endforeach; ?>
                                 </div>
                             </div>
