@@ -43,6 +43,21 @@ class UserModel
         }
     }
 
+    public function UpdateUserNopassword($userID, $username, $email, $fullName, $gender, $profilePic)
+    {
+        $updateDate = date('Y-m-d');
+    
+        $stmt = $this->conn->prepare("UPDATE Users SET username=?, email=?, full_name=?, gender=?, profile_pic=?, updated_at=? WHERE user_id=?");
+        $stmt->bind_param("ssssssi", $username, $email, $fullName, $gender, $profilePic, $updateDate, $userID);
+    
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     
 
 
@@ -66,7 +81,7 @@ class UserModel
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
-    
+        
         if ($user && password_verify($password, $user['password'])) {
             return $user;
         } else {

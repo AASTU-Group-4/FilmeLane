@@ -60,6 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
+
+
     if (empty($fullName)) {
         $errors['fullName'] = 'Full name is required';
         $isVerified = false;
@@ -124,7 +126,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($isVerified) {
-        $result = $userM->UpdateUser($user['user_id'], $username, $email, $Newpassword, $fullName, $gender, $photo);
+        if (!empty($Newpassword)) {
+            $result = $userM->UpdateUser($user['user_id'], $username, $email, $Newpassword, $fullName, $gender, $photo);
+        } else {
+            $result = $userM->UpdateUserNopassword($user['user_id'], $username, $email, $fullName, $gender, $photo);
+        }
         if ($result) {
             $errors['update'] = 'update successfull';
             $user = $userM->getUserInfo($_SESSION['user_id']);

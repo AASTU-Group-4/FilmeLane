@@ -1735,6 +1735,7 @@ body.active { overflow: hidden; }
 }
 
 .episode {
+  
   min-width: 150px;
   background-color: #222;
   padding: 10px;
@@ -1743,6 +1744,10 @@ body.active { overflow: hidden; }
   box-sizing: border-box;
   cursor: pointer;
   font-size: 12px;
+}
+
+.episode a {
+  color: #f1f1f1;
 }
 
 .episode:hover {
