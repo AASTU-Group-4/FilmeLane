@@ -11,6 +11,7 @@ $tv_id = $_GET['id'];
 
 
 require_once '../models/Movie.php';
+require_once '../models/UserHistory.php';
 require_once '../includes/function.php';
 require_once '../views/header.php';
 
@@ -23,7 +24,15 @@ $movieRecommendations = $movieModel->getTvshowListDetails($movieModel->getTVShow
 $season = isset($_GET['season']) ? $_GET['season'] : $tvShow['seasons'][0]['season_number'];
 $seasonDetails = $movieModel->getSeasonDetail($tv_id, $season);
 
+
+
 if(isset($_GET['eps'])) {
+    if ($isLoggedIn) {
+        $userHistoryModel = new UserHistory();
+        if (!$userHistoryModel->isMovieInHistory($_SESSION['user_id'], $tv_id)) {
+            $userHistoryModel->create($_SESSION['user_id'], $tv_id, date('Y-m-d H:i:s'), 'series');
+        }
+    }
     $url = "https://moviesapi.club/tv/" . $tv_id .'-'.$season.'-'.$_GET['eps'];
     $eps =$_GET['eps'];
     $watch = true;

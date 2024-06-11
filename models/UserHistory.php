@@ -1,119 +1,91 @@
 <?php
+require_once('../includes/db_connection.php');
 
-// import function to establish connection
-require_once 'FilmeLane\includes\db_connection.php';
+class UserHistory {
+    private $conn;
 
-// add new record to user's watch history
-function addToHistory($userId, $movieId, $dateWatched) {
-    // Connect to the database
-    $conn = get_connection();
-    // Prepare the SQL statement with parameter placeholders
-    $sql = "INSERT INTO UserHistory (user_id, movie_id, date_watched) VALUES (?, ?, ?)";
-
-    // Prepare the statement
-    $stmt = mysqli_prepare($conn, $sql);
-    
-    // Bind parameters to the prepared statement
-    mysqli_stmt_bind_param($stmt, "sss", $userId, $movieId, $dateWatched);
-    
-    // Execute the prepared statement
-    mysqli_stmt_execute($stmt);
-
-    // Close the statement and the database connection
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
-}
-
-
-// display full watch history of a user
-function getHistory($userId) { 
-
-    try{
-    // Connect to the database
-    $conn = get_connection();
-    // Prepare the SQL statement with parameter placeholders
-    $sql = "SELECT * FROM UserHistory WHERE user_id = ? ORDER BY date_watched DESC";
-
-    // Prepare the statement
-    $stmt = mysqli_prepare($conn, $sql);
-    if (!$stmt) {
-        throw new Exception("Failed to prepare statement: " . mysqli_error($conn));
+    public function __construct() {
+        $this->conn = get_connection();
     }
-    
-    // Bind the user_id parameter to the prepared statement
-    mysqli_stmt_bind_param($stmt, "s", $userId);
-    
-    // Execute the prepared statement
-    if (!mysqli_stmt_execute($stmt)) {
-            throw new Exception("Failed to execute statement: " . mysqli_stmt_error($stmt));
+
+    // Create a new record in the UserHistory table
+    public function create($user_id, $movie_id, $date_watched, $type) {
+        $stmt = $this->conn->prepare("INSERT INTO UserHistory (user_id, movie_id, date_watched, type) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("isss", $user_id, $movie_id, $date_watched, $type);
+
+        if ($stmt->execute()) {
+            return $stmt->insert_id;
+        } else {
+            return false;
         }
-    
-    // Get the result set
-    $result = mysqli_stmt_get_result($stmt);
-    
-    // Fetch all rows from the result set
-    $history = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-    // Close the statement and the database connection
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
-
-    // Return the history data
-    return $history;
     }
-    catch (Exception $e) {
-        // Handle the error
-        echo "Error: " . $e->getMessage();
-        return array(); // or some default value
+
+    // Read a record from the UserHistory table by history_id
+    public function getByHistoryId($history_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM UserHistory WHERE history_id = ?");
+        $stmt->bind_param("i", $history_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        } else {
+            return null;
+        }
+    }
+
+    // Get all records from the UserHistory table by user_id
+    public function getByUserId($user_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM UserHistory WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $records = [];
+        while ($row = $result->fetch_assoc()) {
+            $records[] = $row;
+        }
+
+        return $records;
+    }
+
+    // Check if a movie is already in the user's history
+    public function isMovieInHistory($user_id, $movie_id) {
+        $stmt = $this->conn->prepare("SELECT * FROM UserHistory WHERE user_id = ? AND movie_id = ?");
+        $stmt->bind_param("is", $user_id, $movie_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->num_rows > 0;
+    }
+
+    // Update a record in the UserHistory table
+    public function update($history_id, $user_id, $movie_id, $date_watched, $type) {
+        $stmt = $this->conn->prepare("UPDATE UserHistory SET user_id = ?, movie_id = ?, date_watched = ?, type = ? WHERE history_id = ?");
+        $stmt->bind_param("isssi", $user_id, $movie_id, $date_watched, $type, $history_id);
+        
+        return $stmt->execute();
+    }
+
+    // Delete a record from the UserHistory table
+    public function delete($history_id) {
+        $stmt = $this->conn->prepare("DELETE FROM UserHistory WHERE history_id = ?");
+        $stmt->bind_param("i", $history_id);
+        
+        return $stmt->execute();
+    }
+
+    // Clear all history for a specific user
+    public function clearHistory($user_id) {
+        $stmt = $this->conn->prepare("DELETE FROM UserHistory WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        
+        return $stmt->execute();
+    }
+
+    // Close the database connection
+    public function __destruct() {
+        $this->conn->close();
     }
 }
 
-if (isset($_POST['clearHistory'])) {
-    $userId = $_SESSION['user_id'];
-    clearHistory($userId);
-    header('Location: history_view.php'); // redirect back to history view page
-    exit;
-}
-
-// delete all watch history for a user
-function clearHistory($userId) {
-    // Connect to the database
-    $conn = get_connection();
-    // Prepare the SQL statement with parameter placeholders
-    $sql = "DELETE FROM UserHistory WHERE user_id = ?";
-
-    // Prepare the statement
-    $stmt = mysqli_prepare($conn, $sql);
-    
-    // Bind the user_id parameter to the prepared statement
-    mysqli_stmt_bind_param($stmt, "s", $userId);
-    
-    // Execute the prepared statement
-    mysqli_stmt_execute($stmt);
-
-    // Close the statement and the database connection
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
-}
-
-// remove a single watch history of a user
-function removeFromHistory($userId, $movieId) {
-    // Connect to the database
-    $conn = get_connection();
-    // Prepare the SQL statement with parameter placeholders
-    $sql = "DELETE FROM UserHistory WHERE user_id = ? AND movie_id = ?";
-
-    // Prepare the statement
-    $stmt = mysqli_prepare($conn, $sql);
-    
-    // Bind the user_id and movie_id parameters to the prepared statement
-    mysqli_stmt_bind_param($stmt, "ss", $userId, $movieId);
-    
-    // Execute the prepared statement
-    mysqli_stmt_execute($stmt);
-
-    // Close the statement and the database connection
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
-}
-?>

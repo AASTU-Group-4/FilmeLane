@@ -51,18 +51,20 @@ window.addEventListener("scroll", function () {
 
 });
 
+/**
+ * script.js
+*/
 
-
-document.addEventListener("DOMContentLoaded", function() {
-    const searchButton = document.querySelector('.search-btn');
-    const searchInput = document.getElementById('search-input');
-
-    searchButton.addEventListener('click', function() {
-        if (searchInput.value.trim() === '') {
-            searchInput.focus();
-        } else {
-            searchInput.closest('form').submit();
-        }
-    });
+$(document).ready(function() {
+  $('.clear-btn').on('click', function() {
+      $.ajax({
+          type: 'POST',
+          url: '../models/userHistory.php',
+          data: { clearHistory: true },
+          success: function() {
+              // clear the list view from the page
+              $('.clear-list').empty();
+          }
+      });
+  });
 });
-

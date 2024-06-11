@@ -1,21 +1,33 @@
 <?php
 session_start();
+
 if (!isset($_GET['id'])) {
     header('Location: ./home.php');
     exit;
 }
 $movie_id = $_GET['id'];
 
+
+
+require_once '../models/Movie.php';
+require_once '../models/UserHistory.php';
+require_once '../includes/function.php';
+require_once '../views/header.php';
+
 if (isset($_GET['watch'])) {
+    if ($isLoggedIn) {
+        $userHistoryModel = new UserHistory();
+        if (!$userHistoryModel->isMovieInHistory($_SESSION['user_id'], $movie_id)) {
+            $userHistoryModel->create($_SESSION['user_id'], $movie_id, date('Y-m-d H:i:s'), 'movie');
+        }
+    }
     $url = "https://moviesapi.club/movie/" . $movie_id;
     $watch = true;
 } else {
     $watch = false;
 }
 
-require_once '../models/Movie.php';
-require_once '../includes/function.php';
-require_once '../views/header.php';
+
 
 
 $movieModel = new Movie();

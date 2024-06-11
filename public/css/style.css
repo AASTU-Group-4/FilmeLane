@@ -994,6 +994,7 @@ body.active { overflow: hidden; }
   font-weight: var(--fw-500);
   line-height: 1.8;
   margin-bottom: 40px;
+  text-align: justify;
 }
 
 .details-actions {
@@ -1735,7 +1736,7 @@ body.active { overflow: hidden; }
 }
 
 .episode {
-  
+  max-width: 300px;
   min-width: 150px;
   background-color: #222;
   padding: 10px;
