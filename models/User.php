@@ -137,4 +137,8 @@ class UserModel
         $stmt->bind_param("si", $newProfilePic, $userID);
         return $stmt->execute();
     }
+
+    public function __destruct() {
+        $this->conn->close();
+    }
 }
