@@ -15,5 +15,5 @@ if (isset($_GET['year']) && is_numeric($_GET['year'])) {
 }
 $Tvshows = $movie->getTvshowByYear($movie->getTVShowByYear($selectedYear)['results']);
 
-require '../views/movies_view.php';
+require '../views/tvShows_view.php';
 
