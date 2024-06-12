@@ -73,11 +73,11 @@ $moviesG = $movie->getMovieGenres()['genres'];
                     </li>
 
                     <li>
-                        <a href="#" class="navbar-link">Movies</a>
+                        <a href="/pages/movies.php" class="navbar-link">Movies</a>
                     </li>
 
                     <li>
-                        <a href="#" class="navbar-link">Tv Show</a>
+                        <a href="/pages/tv_shows.php" class="navbar-link">Tv Show</a>
                     </li>
 
                     <li>
