@@ -33,11 +33,11 @@
 
 
   <main>
-    <?php if($watch): ?>
+    <?php if ($watch): ?>
       <div class="movie-container">
-        <iframe src="<?php echo $url;?>" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+        <iframe src="<?php echo $url; ?>" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
       </div>
-    <?php endif?>
+    <?php endif ?>
     <article>
 
       <!-- 
@@ -67,7 +67,7 @@
             <div class="meta-wrapper">
 
               <div class="badge-wrapper">
-                <div class="badge badge-fill"><a href="<?php echo $trailer_url;?>" target="__blank">Trailer</a></div>
+                <div class="badge badge-fill"><a href="<?php echo $trailer_url; ?>" target="__blank">Trailer</a></div>
 
                 <div class="badge badge-outline">HD</div>
               </div>
@@ -117,12 +117,35 @@
 
                 <p class="text">Streaming Channels</p>
               </div>
+              <?php if (!$isLoggedIn): ?>
+                <button class="btn btn-primary">
+                  <ion-icon name="add"></ion-icon>
+                  <span>Add to favorite</span>
+                </button>
+              <?php else: ?>
+                <?php if ($userWatchListModel->isMovieInWatchlist($_SESSION['user_id'], $movie_id)): ?>
+                  <a
+                    href="./movie_info.php?id=<?php echo $movie['id'];
+                    if (isset($_GET['watch']))
+                      echo "&watch=true" ?>&fav=remove">
+                      <button class="btn btn-primary">
+                        <ion-icon name="remove"></ion-icon>
+                        <span>Remove from favorite</span>
+                      </button>
+                    </a>
+                <?php else: ?>
+                  <a
+                    href="./movie_info.php?id=<?php echo $movie['id'];
+                    if (isset($_GET['watch']))
+                      echo "&watch=true" ?>&fav=add">
+                      <button class="btn btn-primary">
+                        <ion-icon name="add"></ion-icon>
+                        <span>Add to favorite</span>
+                      </button>
+                    </a>
+                <?php endif; ?>
+              <?php endif; ?>
 
-              <button class="btn btn-primary">
-                <ion-icon name="add"></ion-icon>
-
-                <span>Add to favorite</span>
-              </button>
 
             </div>
 

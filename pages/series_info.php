@@ -12,6 +12,7 @@ $tv_id = $_GET['id'];
 
 require_once '../models/Movie.php';
 require_once '../models/UserHistory.php';
+require_once '../models/UserWatchlist.php';
 require_once '../includes/function.php';
 require_once '../views/header.php';
 
@@ -41,6 +42,14 @@ if(isset($_GET['eps'])) {
     $watch = false;
 }
 
+$userWatchListModel = new UserWatchList();
+if(isset($_GET['fav']) and $isLoggedIn){
+    if ($_GET['fav'] == 'add') {
+        $userWatchListModel->addToWatchlist($_SESSION['user_id'], $tv_id, 'series');
+    } else {
+        $userWatchListModel->clearMovieFromWatchlist($_SESSION['user_id'], $tv_id);
+    }
+}
 
 if(!empty($movieModel->getMovieVideos($tv_id)['results'])) {
     $trailer_key = $movieModel->getMovieVideos($tv_id)['results'][0]['key'];

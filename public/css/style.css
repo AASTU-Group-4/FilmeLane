@@ -1002,9 +1002,12 @@ body.active { overflow: hidden; }
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px 40px;
-  max-width: 460px;
+  max-width: 500px;
   background: var(--gunmetal-2);
-  padding: 25px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-right: 10px;
+  padding-left: 10px;
   border: 1px solid var(--jet);
   border-radius: 4px;
   margin-bottom: 30px;

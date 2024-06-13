@@ -135,12 +135,38 @@
                                 <p class="text">Streaming Channels</p>
                             </div>
 
-                            <button class="btn btn-primary">
-                                <ion-icon name="add"></ion-icon>
-
-                                <span>Add to favorite</span>
-                            </button>
-
+                            <?php if (!$isLoggedIn): ?>
+                                <button class="btn btn-primary">
+                                    <ion-icon name="add"></ion-icon>
+                                    <span>Add to favorite</span>
+                                </button>
+                            <?php else: ?>
+                                <?php if ($userWatchListModel->isMovieInWatchlist($_SESSION['user_id'], $tv_id)): ?>
+                                    <a href="/pages/series_info.php?id=<?php echo $tv_id;
+                                    if (isset($_GET['season']))
+                                        echo "&season=" . $_GET['season'];
+                                    if (isset($_GET['eps']))
+                                        echo "&eps=" . $_GET['eps'];
+                                    ?>&fav=remove">
+                                        <button class="btn btn-primary">
+                                            <ion-icon name="remove"></ion-icon>
+                                            <span>Remove from favorite</span>
+                                        </button>
+                                    </a>
+                                <?php else: ?>
+                                    <a href="/pages/series_info.php?id=<?php echo $tv_id;
+                                    if (isset($_GET['season']))
+                                        echo "&season=" . $_GET['season'];
+                                    if (isset($_GET['eps']))
+                                        echo "&eps=" . $_GET['eps'];
+                                    ?>&fav=add">
+                                        <button class="btn btn-primary">
+                                            <ion-icon name="remove"></ion-icon>
+                                            <span>Add to favorite</span>
+                                        </button>
+                                    </a>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         </div>
 
                     </div>
@@ -167,7 +193,7 @@
                                 foreach ($seasonDetails['episodes'] as $episode) {
                                     $selected = ($episode['episode_number'] == $eps) ? 'active' : '';
                                     $viewUrl = "/pages/series_info.php?id=$tv_id&season=$season&eps=" . $episode['episode_number'];
-                                    echo "<div class='episode {$selected}'><a href='{$viewUrl}'>Eps ". $episode['episode_number']. ": " . $episode['name'] . "</a></div>";
+                                    echo "<div class='episode {$selected}'><a href='{$viewUrl}'>Eps " . $episode['episode_number'] . ": " . $episode['name'] . "</a></div>";
                                 }
                                 ?>
                             </div>
