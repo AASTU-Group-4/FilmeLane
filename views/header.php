@@ -27,10 +27,7 @@ $moviesG = $movie->getMovieGenres()['genres'];
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 </head>
 
@@ -60,24 +57,16 @@ $moviesG = $movie->getMovieGenres()['genres'];
                     </li>
 
                     <li>
-                        <a href="#">
-                            <div class="dropdown">
-                                <button class="dropbtn navbar-link">Genre</button>
-                                <div class="dropdown-content">
-                                    <?php foreach ($moviesG as $genre): ?>
-                                        <a href="/pages/genre.php?id=<?php echo $genre['id']; ?>"><?php echo $genre['name']; ?></a>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        </a>
+                        <a href="/pages/genre.php?" class="navbar-link">Genre</a>
+
                     </li>
 
                     <li>
-                        <a href="/pages/movies.php" class="navbar-link">Movies</a>
+                        <a href="/pages/movies.php?type=movie" class="navbar-link">Movies</a>
                     </li>
 
                     <li>
-                        <a href="/pages/tv_shows.php" class="navbar-link">Tv Show</a>
+                    <a href="/pages/movies.php?type=series" class="navbar-link">Tv Show</a>
                     </li>
 
                     <li>
@@ -96,7 +85,8 @@ $moviesG = $movie->getMovieGenres()['genres'];
             </div>
 
             <?php if ($isLoggedIn): ?>
-                <li><a href="/pages/update_account.php" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span>
+                <li><a href="/pages/update_account.php" class="btn btn-primary"><span
+                            class="glyphicon glyphicon-user"></span>
                         Profile</a></li>
             <?php else: ?>
                 <li><a href="/pages/login.php" class="btn btn-primary"><span class="glyphicon glyphicon-log-in"></span>
@@ -111,4 +101,3 @@ $moviesG = $movie->getMovieGenres()['genres'];
 
         </div>
     </header>
-    

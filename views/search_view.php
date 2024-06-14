@@ -16,24 +16,17 @@
     <main>
         <section class="top-rated top-padding" style="min-height: 100vh;">
             <div class="container">
-                <h2 class="h2 section-title"><?php echo htmlspecialchars($Name); ?>:</h2>
+                <h2 class="h2 section-title"><?php echo htmlspecialchars($query); ?>:</h2>
 
                 <ul class="filter-list">
-                    <?php if ($page > 1): ?>
-                        <li>
-                            <a class="filter-btn"
-                                href="?type=<?php echo htmlspecialchars($type); ?>&page=<?php echo $page - 1; ?>">Previous</a>
-                        </li>
-                    <?php endif; ?>
                     <li>
-                        <span class="filter-btn">Page <?php echo $page; ?></span>
+                        <a href="?search=<?php echo htmlspecialchars($query); ?>&type=movie&page=1"
+                            class="filter-btn <?php echo ($type == 'movie') ? 'active' : ''; ?>">Movies</a>
                     </li>
-                    <?php if ($page < $results['total_pages']): ?>
-                        <li>
-                            <a class="filter-btn"
-                                href="?type=<?php echo htmlspecialchars($type); ?>&page=<?php echo $page + 1; ?>">Next</a>
-                        </li>
-                    <?php endif; ?>
+                    <li>
+                        <a href="?search=<?php echo htmlspecialchars($query); ?>&type=tv&page=1"
+                            class="filter-btn <?php echo ($type == 'tv') ? 'active' : ''; ?>">TV Shows</a>
+                    </li>
                 </ul>
 
                 <ul class="movies-list">
@@ -52,14 +45,21 @@
 
                 <div class="filter-list" style="margin-top:20px">
                     <?php if ($page > 1): ?>
-                        <a class="filter-btn"
-                            href="?type=<?php echo htmlspecialchars($type); ?>&page=<?php echo $page - 1; ?>">Previous</a>
+                        <li>
+                            <a class="filter-btn"
+                                href="?search=<?php echo htmlspecialchars($query); ?>&type=<?php echo htmlspecialchars($type); ?>&page=<?php echo $page - 1; ?>">Previous</a>
+                        </li>
                     <?php endif; ?>
-                    <span class="filter-btn">Page <?php echo $page; ?></span>
+                    <li>
+                        <span class="filter-btn" >Page <?php echo $page; ?></span>
+                    </li>
                     <?php if ($page < $results['total_pages']): ?>
-                        <a class="filter-btn"
-                            href="?type=<?php echo htmlspecialchars($type); ?>&page=<?php echo $page + 1; ?>">Next</a>
-                    <?php endif; ?>
+                        <li>
+                            <a class="filter-btn"
+                            href="?search=<?php echo htmlspecialchars($query); ?>&type=<?php echo htmlspecialchars($type); ?>&page=<?php echo $page + 1; ?>">Next</a>
+
+                        </li>
+                        <?php endif; ?>
                 </div>
             </div>
         </section>

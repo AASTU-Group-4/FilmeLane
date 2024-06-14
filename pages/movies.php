@@ -1,21 +1,24 @@
-<!-- movies list page -->
 <?php
 session_start();
 require_once '../views/header.php';
 require_once '../models/Movie.php';
 require_once '../includes/function.php';
-$movie = new Movie();
-$pMoviesDetails = $movie->getMovie(($movie->getPopularMovies())['results'][rand(0, 19)]['id']);
-$upcomingMovies = $movie->getMovieListDetails($movie->getTopRatedMovies()['results']);
-$currentYear = date('Y');
-// Assuming $movie is an instance of a class with a method getMovieByYear
-if (isset($_GET['year']) && is_numeric($_GET['year'])) {
-    $selectedYear = intval($_GET['year']);
+
+$type = isset($_GET['type']) ? $_GET['type'] : 'movie';
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+$movieModel = new Movie();
+
+$Name = 'Popular ' . $type;
+
+$SearchResults = [];
+if ($type == 'movie') {
+    $results = $movieModel->getPopularMovies($page);
+    $SearchResults = $movieModel->getMovieListDetails($results['results']);
 } else {
-    $selectedYear = $currentYear;
+    $results = $movieModel->getPopularTVShows($page);
+    $SearchResults = $movieModel->getTvshowListDetails($results['results']);
+
 }
 
-$Movies = $movie->getMovieByYear($movie->getMovieByYear($currentYear)['results']);
-
-require '../views/movies_view.php';
-
+require_once '../views/movies_view.php';

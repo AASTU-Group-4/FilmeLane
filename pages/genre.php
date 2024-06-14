@@ -4,76 +4,23 @@ require_once '../views/header.php';
 require_once '../models/Movie.php';
 require_once '../includes/function.php';
 
-$searchResults = [];
-$Searchmovie = [];
-$Searchtv = [];
+$id = isset($_GET['id']) ? $_GET['id'] : 18;
+$type = isset($_GET['type']) ? $_GET['type'] : 'movie';
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
 
-if ($_GET['id']) {
-    $movie = new Movie();
-    $searchResults = $movie->getMovieByGenre($_GET['id']);
-    if (!empty($searchResults['movie']) && !empty($searchResults['tv'])) {
-        $Searchmovie = $movie->getMovieListDetails($searchResults['movie']);
-        $Searchtv = $movie->getTvshowListDetails($searchResults['tv']);
-    }
+$movieModel = new Movie();
+
+$genreName = $movieModel->getGenreNameById($id);
+$moviesG = $movieModel->getMovieGenres()['genres'];
+$tvShowG = $movieModel->getTVShowGenres()['genres'];
+
+$SearchResults = [];
+if ($type == 'movie') {
+    $results = $movieModel->getMovieByGenre($id, $page);
+    $SearchResults = $movieModel->getMovieListDetails($results['results']);
+} else {
+    $results = $movieModel->getTVShowByGenre($id, $page);
+    $SearchResults = $movieModel->getTvshowListDetails($results['results']);
 }
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmlane - Best movie collections</title>
-
-    <link rel="stylesheet" href="/public/css/style.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <head>
-
-    <body>
-        <main>
-            <section class="top-rated" style="min-height: 100vh;">
-                <div class="container">
-
-                    <h2 class="h2 section-title">Genre Resault: </h2>
-
-                    <ul class="filter-list">
-
-                        <li>
-                            <button class="filter-btn">Movies</button>
-                        </li>
-
-                        <li>
-                            <button class="filter-btn">TV Shows</button>
-                        </li>
-
-                        <li>
-                            <button class="filter-btn">Documentary</button>
-                        </li>
-
-                    </ul>
-
-                    <ul class="movies-list">
-
-                        <?php
-                        foreach ($Searchmovie as $movie) {
-                            echo "<li>" . createDynamicMovieCard($movie) . "</li>";
-                        }
-                        ?>
-                        <?php
-                        foreach ($Searchtv as $tvshow) {
-                            echo "<li>" . createDynamicTvshowCard($tvshow) . "</li>";
-                        }
-                        ?>
-
-                    </ul>
-
-                </div>
-            </section>
-        </main>
-    </body>
+require_once '../views/genre_view.php';

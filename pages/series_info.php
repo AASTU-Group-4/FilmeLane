@@ -7,9 +7,6 @@ if(!isset($_GET['id'])) {
 $tv_id = $_GET['id'];
 
 
-
-
-
 require_once '../models/Movie.php';
 require_once '../models/UserHistory.php';
 require_once '../models/UserWatchlist.php';

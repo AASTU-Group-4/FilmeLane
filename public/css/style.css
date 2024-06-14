@@ -1763,3 +1763,7 @@ body.active { overflow: hidden; }
   background-color: #ff0;
   color: #111;
 }
+
+.top-padding {
+  padding-top: 150px;
+}

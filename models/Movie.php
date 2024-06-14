@@ -24,13 +24,13 @@ class Movie
             }
         }
         if (!empty($allList['movie'])) {
-            usort($allList['movie'], function($a, $b) {
+            usort($allList['movie'], function ($a, $b) {
                 return $b['vote_average'] - $a['vote_average'];
             });
         }
 
         if (!empty($allList['tv'])) {
-            usort($allList['tv'], function($a, $b) {
+            usort($allList['tv'], function ($a, $b) {
                 return $b['vote_average'] - $a['vote_average'];
             });
         }
@@ -237,7 +237,8 @@ class Movie
         return $this->sendRequest($url);
     }
 
-    public function getSeasonDetail($series_id, $season_number) {
+    public function getSeasonDetail($series_id, $season_number)
+    {
         $url = API_URL . "3/tv/{$series_id}/season/{$season_number}";
         return $this->sendRequest($url);
     }
@@ -322,5 +323,38 @@ class Movie
         return $all;
     }
 
+    public function getAllGenres()
+    {
+        $url = API_URL . '3/genre/movie/list?language=en-US';
+        $movieGenres = $this->sendRequest($url);
 
+        $url = API_URL . '3/genre/tv/list?language=en-US';
+        $tvGenres = $this->sendRequest($url);
+
+        return array_merge($movieGenres['genres'], $tvGenres['genres']);
+    }
+
+    public function getGenreNameById($id)
+    {
+        $genres = $this->getAllGenres();
+        foreach ($genres as $genre) {
+            if ($genre['id'] == $id) {
+                return $genre['name'];
+            }
+        }
+        return 'Unknown Genre';
+    }
+    public function searchMovie($query, $page = 1)
+    {
+        $url = API_URL . '3/search/movie?query=' . urlencode($query) . '&include_adult=false&language=en-US&page=' . $page;
+
+        return $this->sendRequest($url);
+    }
+
+    public function searchTVShow($query, $page = 1)
+    {
+        $url = API_URL . '3/search/tv?query=' . urlencode($query) . '&include_adult=false&language=en-US&page=' . $page;
+
+        return $this->sendRequest($url);
+    }
 }
