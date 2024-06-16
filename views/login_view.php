@@ -16,7 +16,8 @@
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form method="POST" action=<?php echo $_SERVER["PHP_SELF"] ?> >
+    <form method="POST" action=<?php echo $_SERVER["PHP_SELF"] ?>>
+        <a href="home.php">Home</a>
         <h3>Login </h3>
 
         <label for="identifier">Email</label>
@@ -37,8 +38,7 @@
         <?php endif; ?>
         <a href="register.php">Sign Up</a>
         <input type="submit" value="Login" class="butn">
-        <a href="home.php">Home</a>
-
+        <a href="forgot-password.php">Forgot Password?</a>
 
     </form>
 </body>
