@@ -3,15 +3,13 @@
 session_start();
 
 // Include the header
-include '../../templates/header.php';
 
 // Check if the admin is logged in
-if (!isset($_SESSION['admin_logged_in'])) {
+if (!isset($_SESSION['admin_id'])) {
     header('Location: login.php');
     exit();
 }
 
-// Database connection
 require_once '../../includes/db_connection.php';
 
 // Function to generate CSV file
@@ -30,7 +28,6 @@ function generateCSV($filename, $data) {
     exit();
 }
 
-// Check if form is submitted
 if (isset($_POST['generate_report'])) {
     $reportType = $_POST['report_type'];
     $conn = get_connection();
@@ -93,6 +90,8 @@ if (isset($_POST['generate_report'])) {
 
     $conn->close();
 }
+include 'templates/header.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -121,5 +120,5 @@ if (isset($_POST['generate_report'])) {
 
 <?php
 // Include the footer
-include '../../templates/footer.php';
+include 'templates/footer.php';
 ?>
