@@ -13,7 +13,7 @@ class UserWatchList {
             return false;
         }
 
-        $query = "INSERT INTO UserWatchlist (user_id, movie_id, type) VALUES (?, ?, ?)";
+        $query = "INSERT INTO UserWatchlist (user_id, movie_id, added_at, type) VALUES (?, ?, CURRENT_TIMESTAMP, ?)";
         $statement = $this->db->prepare($query);
         $statement->bind_param("iss", $userId, $movieId, $type);
         $statement->execute();
@@ -46,9 +46,20 @@ class UserWatchList {
         $statement->close();
     }
 
+    public function removeMovieFromWatchlist($userId, $watchlist_id) {
+        $query = "DELETE FROM UserWatchlist WHERE user_id = ? AND watchlist_id = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param("ii", $userId, $watchlist_id);
+        $statement->execute();
+        if ($statement->error) {
+            error_log("Error removing movie from watchlist: " . $statement->error);
+        }
+        $statement->close();
+    }
+
     // Get the user's watchlist
     public function getWatchlist($userId) {
-        $query = "SELECT movie_id, type, added_at FROM UserWatchlist WHERE user_id = ?";
+        $query = "SELECT * FROM UserWatchlist WHERE user_id = ?";
         $statement = $this->db->prepare($query);
         $statement->bind_param("i", $userId);
         $statement->execute();
@@ -99,4 +110,3 @@ class UserWatchList {
         $this->db->close();
     }
 }
-
