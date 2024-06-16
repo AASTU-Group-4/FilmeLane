@@ -357,4 +357,18 @@ class Movie
 
         return $this->sendRequest($url);
     }
+
+    public function getRandomMovieName()
+    {
+        $randomPage = rand(1, 100); // Generate a random page number between 1 and 100 (adjust as needed)
+        $url = API_URL . '3/discover/movie?sort_by=popularity.desc&language=en-US&page=' . $randomPage;
+        $response = $this->sendRequest($url);
+
+        if (isset($response['results']) && count($response['results']) > 0) {
+            $randomMovie = $response['results'][array_rand($response['results'])];
+            return $randomMovie['title'];
+        } else {
+            return 'No movies found.';
+        }
+    }
 }
