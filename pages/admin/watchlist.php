@@ -8,25 +8,13 @@
     
   </head>
 <body>
-<header class="header">
-    <div class="logo">
-    <img src="../../public/images/logo.svg" alt="Filmlane Logo">
-    </div>
-    <nav class="navbar">
-        <ul>
-        <li><a href="index.php">Home</a></li>
-            <li><a href="users.php">Users</a></li>
-            <li><a href="user_history.php">User History</a></li>
-            <li><a href="watchlist.php">Watchlist</a></li>
-            <li><a href="report.php">Reports</a></li>
-            <li><a href="account.php">Account</a></li>
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
-    </nav>
-</header>
+<?php
+// Include the footer
+include 'templates/header.php';
+?>
 
-<h2>Watchlist</h2>
 
+<h3>Watchlist</h3>
 
 <?php
 
@@ -107,79 +95,8 @@ $conn->close();
 </body>
 
 
-<footer class="footer">
-
-        <div class="footer-top">
-            <div class="container">
-
-                <div class="footer-brand-wrapper">
-
-                    <a href="" class="logo">
-                        <img src="/public/images/logo.svg" alt="Filmlane logo">
-                    </a>
-
-                    <ul class="footer-list">
-
-                        <li>
-                            <a href="./index.html" class="footer-link">Home</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">Movie</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">TV Show</a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">Web Series</a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-                <div class="divider"></div>
-
-                <div class="quicklink-wrapper">
-
-                    <ul class="social-list">
-
-                        <li>
-                            <a href="#" class="social-link">
-                                <ion-icon name="logo-facebook"></ion-icon>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="social-link">
-                                <ion-icon name="logo-twitter"></ion-icon>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="social-link">
-                                <ion-icon name="logo-pinterest"></ion-icon>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="social-link">
-                                <ion-icon name="logo-linkedin"></ion-icon>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-            </div>
-        </div>
-
-    </footer>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-
+<?php
+// Include the footer
+include 'templates/footer.php';
+?>
 </html>
