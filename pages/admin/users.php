@@ -1,4 +1,5 @@
 <?php
+require_once "templates/header.php";
 require_once "../../includes/db_connection.php";
 
 function fetch_all_users() {
@@ -56,9 +57,48 @@ if (isset($_GET['delete_user'])) {
 $users = fetch_all_users();
 ?>
 
-<?php require_once "templates/header.php";
- ?>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - User Management</title>
+    <style>
+        body {
+            background-color: #fff;
+            color: #ffdd00;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ffdd00;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #ffdd00;
+            color: #000;
+        }
+        .actions a, .actions button {
+            margin-right: 10px;
+            color: #ffdd00;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
     <h1>User Management</h1>
     <table>
         <thead>
@@ -92,5 +132,7 @@ $users = fetch_all_users();
             <?php endif; ?>
         </tbody>
     </table>
+</body>
+</html>
 
 <?php require_once "templates/footer.php"; ?>
