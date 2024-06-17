@@ -18,25 +18,6 @@ function fetch_all_users() {
     return $users;
 }
 
-if (isset($_POST['update_user'])) {
-    $id = $_POST['id'];
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-
-    $conn = get_connection();
-    $stmt = $conn->prepare("UPDATE Users SET username = ?, email = ? WHERE id = ?");
-    $stmt->bind_param("ssi", $username, $email, $id);
-
-    if ($stmt->execute()) {
-        echo "User updated successfully.";
-    } else {
-        echo "Error updating user: " . $conn->error;
-    }
-
-    $stmt->close();
-    $conn->close();
-}
-
 if (isset($_GET['delete_user'])) {
     $id = $_GET['id'];
 
@@ -56,7 +37,6 @@ if (isset($_GET['delete_user'])) {
 
 $users = fetch_all_users();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,7 +65,7 @@ $users = fetch_all_users();
             background-color: #ffdd00;
             color: #000;
         }
-        .actions a, .actions button {
+        .actions a {
             margin-right: 10px;
             color: #ffdd00;
             text-decoration: none;
@@ -93,7 +73,7 @@ $users = fetch_all_users();
             border: none;
             cursor: pointer;
         }
-        .actions button:hover {
+        .actions a:hover {
             text-decoration: underline;
         }
     </style>
@@ -113,16 +93,12 @@ $users = fetch_all_users();
             <?php if (count($users) > 0): ?>
                 <?php foreach ($users as $user): ?>
                     <tr>
-                        <form method="post">
-                            <td><?php echo htmlspecialchars($user['id']); ?></td>
-                            <td><input type="text" name="username" value="<?php echo htmlspecialchars($user['username']); ?>"></td>
-                            <td><input type="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>"></td>
-                            <td class="actions">
-                                <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-                                <button type="submit" name="update_user">Save</button>
-                                <a href="?delete_user=1&id=<?php echo $user['id']; ?>" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
-                            </td>
-                        </form>
+                        <td><?php echo htmlspecialchars($user['id']); ?></td>
+                        <td><?php echo htmlspecialchars($user['username']); ?></td>
+                        <td><?php echo htmlspecialchars($user['email']); ?></td>
+                        <td class="actions">
+                            <a href="?delete_user=1&id=<?php echo $user['id']; ?>" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -134,5 +110,4 @@ $users = fetch_all_users();
     </table>
 </body>
 </html>
-
 <?php require_once "templates/footer.php"; ?>
